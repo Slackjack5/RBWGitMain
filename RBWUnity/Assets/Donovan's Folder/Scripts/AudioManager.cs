@@ -12,7 +12,12 @@ public class AudioManager : MonoBehaviour
     public AudioMixerGroup mixerGroupEffects;
     public AudioMixerGroup mixerGroupMusic;
     public AudioMixer musicMixer;
+    public float fadeSpeed = .006f;
 
+
+    //Fades
+    public bool fadeIdleOcean = false;
+    public bool fadeReturn = false;
     private bool tutorialMusicStopped=false;
     private bool endReached = false;
     // Start is called before the first frame update
@@ -61,50 +66,18 @@ public class AudioManager : MonoBehaviour
 
         //Play Music
         instance.Play("IdleSong");
-
+        instance.Play("UnderwaterSong");
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         Scene currentScene = SceneManager.GetActiveScene();
-
         string sceneName = currentScene.name;
 
-        if (sceneName == "Level 1-Baby's First Steps" && !tutorialMusicStopped)
+        if(fadeIdleOcean)
         {
-            Stop("Music-Tutorial");
-            Play("Music-RunFastShootAliens");
-            tutorialMusicStopped = true;
-        }
-        else if (sceneName == "Level 2-Tread Carefully" && !tutorialMusicStopped)
-        {
-            Stop("Music-Tutorial");
-            Play("Music-RunFastShootAliens");
-            tutorialMusicStopped = true;
-        }
-        else if (sceneName == "Level 3-Not All Robots Kill" && !tutorialMusicStopped)
-        {
-            Stop("Music-Tutorial");
-            Play("Music-RunFastShootAliens");
-            tutorialMusicStopped = true;
-        }
-        else if (sceneName == "Level 4-Combined Issues" && !tutorialMusicStopped)
-        {
-            Stop("Music-Tutorial");
-            Play("Music-RunFastShootAliens");
-            tutorialMusicStopped = true;
-        }
-        else if (sceneName == "Level 5-Charged" && !tutorialMusicStopped)
-        {
-            Stop("Music-Tutorial");
-            Play("Music-RunFastShootAliens");
-            tutorialMusicStopped = true;
-        }
-        else if (sceneName == "End Screen" && endReached==false)
-        {
-            Stop("Music-RunFastShootAliens");
-            Play("Music-Tutorial");
-            endReached = true;
+            FadeDown("IdleSong");
+            FadeUp("UnderwaterSong");
         }
     }
 
@@ -147,6 +120,37 @@ public class AudioManager : MonoBehaviour
             s.source.Pause();
         }
     }
+
+    public void FadeDown(string name)
+    {
+        Sound s = Array.Find(sounds, sound => sound.name == name);
+        if (s.source.volume > 0.01)
+        {
+            s.source.volume -= fadeSpeed;
+        }
+
+    }
+
+    public void FadeUp(string name)
+    {
+        Sound s = Array.Find(sounds, sound => sound.name == name);
+        if (s.source.volume < 0.3)
+        {
+            s.source.volume += fadeSpeed;
+        }
+
+    }
+
+    public void FadeReturn(string name)
+    {
+        Sound s = Array.Find(sounds, sound => sound.name == name);
+        if (s.source.volume < 0.3)
+        {
+            s.source.volume += fadeSpeed;
+        }
+
+    }
+
 
     public void lowPassEnable()
     {
