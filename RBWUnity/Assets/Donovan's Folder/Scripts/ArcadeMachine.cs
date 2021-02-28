@@ -78,8 +78,9 @@ public class ArcadeMachine : MonoBehaviour
 
         IEnumerator isBeingCreated()
         {
+            canEnd = true;
             FindObjectOfType<gameManager>().riseWater();
-            yield return new WaitForSeconds(4);
+            yield return new WaitForSeconds(3);
             generateOcean();
         }
     }

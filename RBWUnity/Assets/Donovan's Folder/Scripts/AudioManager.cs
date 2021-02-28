@@ -79,6 +79,14 @@ public class AudioManager : MonoBehaviour
             FadeDown("IdleSong");
             FadeUp("UnderwaterSong");
         }
+
+        if(fadeReturn)
+        {
+            Debug.Log("fading sound");
+            FadeReturn("IdleSong");
+            //Add other songs
+            FadeSilent("UnderwaterSong");
+        }
     }
 
     // Update is called once per frame
@@ -131,6 +139,16 @@ public class AudioManager : MonoBehaviour
 
     }
 
+    public void FadeSilent(string name)
+    {
+        Sound s = Array.Find(sounds, sound => sound.name == name);
+        if (s.source.volume > 0)
+        {
+            s.source.volume -= fadeSpeed;
+        }
+
+    }
+
     public void FadeUp(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
@@ -147,6 +165,10 @@ public class AudioManager : MonoBehaviour
         if (s.source.volume < 0.3)
         {
             s.source.volume += fadeSpeed;
+        }
+        else
+        {
+            fadeReturn = false;
         }
 
     }
