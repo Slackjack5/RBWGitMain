@@ -13,6 +13,7 @@ public class AudioManager : MonoBehaviour
     public AudioMixerGroup mixerGroupMusic;
     public AudioMixer musicMixer;
     public float fadeSpeed = .006f;
+    public bool fadeWater = false;
 
 
     //Fades
@@ -87,6 +88,11 @@ public class AudioManager : MonoBehaviour
             //Add other songs
             FadeSilent("UnderwaterSong");
         }
+
+        if(fadeWater)
+        {
+            FadeSilent("Water");
+        }
     }
 
     // Update is called once per frame
@@ -125,7 +131,7 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
-            s.source.Pause();
+            s.source.Stop();
         }
     }
 
@@ -149,12 +155,23 @@ public class AudioManager : MonoBehaviour
 
     }
 
+
     public void FadeUp(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
         if (s.source.volume < 0.3)
         {
             s.source.volume += fadeSpeed;
+        }
+
+    }
+
+    public void SoundReset(string name)
+    {
+        Sound s = Array.Find(sounds, sound => sound.name == name);
+        if (s.source.volume < 0.3)
+        {
+            s.source.volume = 0.3f;
         }
 
     }

@@ -25,13 +25,19 @@ public class gameManager : MonoBehaviour
     {
         Debug.Log("I'm rising the water dummy");
         GameObject.Find("waterObject").GetComponent<risingWater>().isRising = true;
-        myFade.SetBool("Transition", true);
+        myFade.SetBool("flash", true);
+        GameObject.Find("AudioManager").GetComponent<AudioManager>().fadeWater = false;
+
     }
 
     public void fallWater()
     {
         Debug.Log("I'm lowering the water dummy");
+        myFade.SetBool("Flash", true);
         GameObject.Find("waterObject").GetComponent<risingWater>().isFalling = true;
+        FindObjectOfType<AudioManager>().PlaySound("Water", UnityEngine.Random.Range(.90f, 1f));
+        GameObject.Find("AudioManager").GetComponent<AudioManager>().fadeWater = false;
+
     }
 
 }
