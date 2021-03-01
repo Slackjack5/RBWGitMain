@@ -68,6 +68,7 @@ public class AudioManager : MonoBehaviour
         //Play Music
         instance.Play("IdleSong");
         instance.Play("UnderwaterSong");
+        instance.Play("RBWCreepy");
     }
 
     private void FixedUpdate()
@@ -173,6 +174,14 @@ public class AudioManager : MonoBehaviour
         {
             s.source.volume = 0.3f;
         }
+
+    }
+
+    public void QuickStop(string name)
+    {
+        Sound s = Array.Find(sounds, sound => sound.name == name);
+        s.source.volume = 0f;
+
 
     }
 

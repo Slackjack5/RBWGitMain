@@ -7,7 +7,7 @@ public class ArcadeMachine : MonoBehaviour
 
     public bool isActive = true;
     private bool eventStarted = false;
-    private int randEvent = 0;
+    public int randEvent = 0;
 
     public bool eventOcean = false;
     public bool canEnd = false;
@@ -25,7 +25,7 @@ public class ArcadeMachine : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        randEvent = 0;
     }
 
     private void OnMouseDown()
@@ -44,7 +44,7 @@ public class ArcadeMachine : MonoBehaviour
             Debug.Log("Don't Click me Dumbass");
             isActive = false;
             //Randomize World
-            randEvent = Random.Range(0, 2);
+            //randEvent = Random.Range(1, 2);
             //Generate World
             startEvent();
 
@@ -77,6 +77,7 @@ public class ArcadeMachine : MonoBehaviour
                 startEvent();
             }
 
+            
         }
     }
 
@@ -100,20 +101,26 @@ public class ArcadeMachine : MonoBehaviour
                 myLever.SetBool("pulled", false);
                 spawnOcean();
                 eventOcean = true;
+                randEvent = 1;
             }
             else if (randEvent == 1)
             {
                 myLever.SetBool("pulled", false);
                 spawnCreepy();
+                randEvent = 0;
             }
             else if (randEvent == -1)
             {
                 myLever.SetBool("pulled", false);
                 blackScreenFront.SetActive(true);
+                //Audio
+                FindObjectOfType<AudioManager>().QuickStop("RBWCreepy");
+
                 resetCreepy();
 
             }
         }
+
 
     }
     void spawnOcean()
@@ -145,6 +152,9 @@ public class ArcadeMachine : MonoBehaviour
         myArcade.SetBool("Creepy", true);
         blackScreen.SetActive(true);
         blackScreenFront.SetActive(true);
+        FindObjectOfType<AudioManager>().QuickStop("IdleSong");
+        FindObjectOfType<AudioManager>().PlaySound("PowerDown", UnityEngine.Random.Range(.90f, 1f));
+
 
         //Initiate Build Up
         StartCoroutine(turnOnLights());
@@ -161,6 +171,7 @@ public class ArcadeMachine : MonoBehaviour
             canEnd = true;
             eventCreepy = true;
             pullLever = true;
+            FindObjectOfType<AudioManager>().SoundReset("RBWCreepy");
         }
     }
 
@@ -168,6 +179,8 @@ public class ArcadeMachine : MonoBehaviour
     {
         myArcade.SetBool("Creepy", false);
         blackScreen.SetActive(false);
+        FindObjectOfType<AudioManager>().QuickStop("IdleSong");
+        FindObjectOfType<AudioManager>().PlaySound("PowerDown", UnityEngine.Random.Range(.90f, 1f));
 
         //Initiate Build Up
         StartCoroutine(turnOnLights2());
@@ -181,6 +194,7 @@ public class ArcadeMachine : MonoBehaviour
             {
                 enemy.SetActive(false);
             }
+            FindObjectOfType<AudioManager>().SoundReset("IdleSong");
 
         }
         canEnd = true;

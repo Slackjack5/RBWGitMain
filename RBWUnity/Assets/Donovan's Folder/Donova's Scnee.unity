@@ -5177,6 +5177,18 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+  - name: RBWCreepy
+    clip: {fileID: 8300000, guid: 54ab0753d3562fd44b17f44f991f3c94, type: 3}
+    volume: 0
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: PowerDown
+    clip: {fileID: 8300000, guid: 7dc5408dd6c6a05459fcd3e0d015a963, type: 3}
+    volume: 0.351
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
   mixerGroupEffects: {fileID: 4888912329596647339, guid: 28c541d3b338c154387931e8f91e3cda, type: 2}
   mixerGroupMusic: {fileID: 4026947561741687398, guid: 28c541d3b338c154387931e8f91e3cda, type: 2}
   musicMixer: {fileID: 24100000, guid: 28c541d3b338c154387931e8f91e3cda, type: 2}
@@ -20419,6 +20431,7 @@ MonoBehaviour:
   pullLever: 1
   blackScreen: {fileID: 113842604}
   blackScreenFront: {fileID: 857543827}
+  eventCreepy: 0
   eyeballs:
   - {fileID: 1929268111}
   - {fileID: 923147233}
